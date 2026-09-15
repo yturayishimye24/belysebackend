@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "dotenv": "^17.4.2",
+    "express": "^5.2.1",
+    "nodemailer": "^10.0.9",
+    "nodemon": "^3.1.14"
+  },
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js",
+    "start": "node index.js"
+  }
+}
