@@ -1,7 +1,10 @@
 import nodemailer from "nodemailer";
 import express from "express";
 import dotenv from "dotenv";
+import cors from "cors";
 import router from "./routes/emailMe.js";
+import connectDB from "./config/db.js"
+
 
 
 dotenv.config();
@@ -10,18 +13,13 @@ const app = express();
 const PORT = process.env.PORT || 8081;
 
 app.use(express.json());
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header("Access-Control-Allow-Methods", "POST, OPTIONS");
+app.use(cors({
+  origin: "http://localhost:5173",
+  methods: ["POST", "OPTIONS"],
+  allowedHeaders: ["Origin", "X-Requested-With", "Content-Type", "Accept"],
+}));
 
-  if (req.method === "OPTIONS") {
-    return res.sendStatus(204);
-  }
-
-  next();
-});
-
+connectDB();
 app.use("/api/send-email", router);
 
 app.listen(PORT, () => {
